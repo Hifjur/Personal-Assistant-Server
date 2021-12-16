@@ -52,6 +52,30 @@ async function run() {
             res.json(result);
         })
 
+        // notes 
+        app.get('/notes', async (req, res) => {
+            const cursor = notesCollection.find();
+            const todo = await cursor.toArray();
+            res.json(todo);
+        })
+
+
+        app.post('/notes', async (req, res) => {
+            console.log(req.body)
+            const todo = req.body;
+            const result = await notesCollection.insertOne(todo);
+            console.log(result);
+            res.json(result);
+        });
+
+        app.delete('/notes/:id', async(req, res) => {
+            const id = req.params.id;
+            console.log("delete",id);
+            const query = {_id : ObjectId(id)};
+            const result = await notesCollection.deleteOne(query);
+            res.json(result);
+        })
+
 
     } finally {
         //await client.close();
