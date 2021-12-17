@@ -92,13 +92,13 @@ async function run() {
 
         // password api with encryption
         app.post('/password', async (req, res) => {
-            const object = JSON.parse(req.body)
-            const {password, email, name, userEmail} = object;
+            //const object = JSON.parse(req.body)
+            //const {password, email, name, userEmail} = object;
             console.log(req.body);
-            const hashedPassword = encrypt(password);
-            const data={hashedPassword,email,name, userEmail};
-            const finaldata = JSON.stringify(data);
-            const result = await passwordCollection.insertOne(finaldata);
+           // const hashedPassword = encrypt(password);
+            //const data={hashedPassword,email,name, userEmail};
+            //const finaldata = JSON.stringify(data);
+            const result = await passwordCollection.insertOne(req.data);
             console.log(result);
             res.json(result);
         });
