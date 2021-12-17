@@ -28,7 +28,7 @@ async function run() {
         const todoCollection = database.collection('todo');
         const notesCollection = database.collection('notes');
         const passwordCollection = database.collection('password');
-
+        const userCollection = database.collection('user');
         app.get('/todo', async (req, res) => {
             const cursor = todoCollection.find();
             const todo = await cursor.toArray();
@@ -74,8 +74,16 @@ async function run() {
             const query = {_id : ObjectId(id)};
             const result = await notesCollection.deleteOne(query);
             res.json(result);
-        })
+        });
 
+        // add new user 
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            console.log(user);
+            const result = await usersCollection.insertOne(user);
+            console.log(result);
+            res.json(result);
+        })
 
     } finally {
         //await client.close();
