@@ -11,6 +11,7 @@ const ObjectId = require('mongodb').ObjectId;
 
 
 const {encrypt, decrypt} = require('./Encryption');
+const { json } = require('express/lib/response');
 
 //middlewawire
 app.use(cors());
@@ -91,11 +92,13 @@ async function run() {
 
         // password api with encryption
         app.post('/password', async (req, res) => {
-            const {passowrd, email, name, userEmail} = req.body;
+            const object = JSON.parse(req.body)
+            const {passowrd, email, name, userEmail} = object;
             console.log(req.body);
             const hashedPassword = encrypt(passowrd);
             const data={hashedPassword,email,name, userEmail};
-            const result = await passwordCollection.insertOne(data);
+            const finaldata = JSON.stringify(data);
+            const result = await passwordCollection.insertOne(finaldata);
             console.log(result);
             res.json(result);
         })
