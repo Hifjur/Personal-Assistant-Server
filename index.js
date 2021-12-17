@@ -56,9 +56,11 @@ async function run() {
 
         // notes 
         app.get('/notes', async (req, res) => {
-            const cursor = notesCollection.find();
-            const todo = await cursor.toArray();
-            res.json(todo);
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = notesCollection.find(query);
+            const notes = await cursor.toArray();
+            res.json(notes);
         })
 
 
