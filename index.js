@@ -94,10 +94,10 @@ async function run() {
       res.json(result);
     });
 
-    app.post("/password", async (req, res) => {
-      const pass = req.body;
+    app.post("/appointment", async (req, res) => {
+      const Appointment = req.body;
       console.log(req.body);     
-      const result = await passwordCollection.insertOne(pass);
+      const result = await passwordCollection.insertOne(Appointment);
       console.log(result);
       res.json(result);
     });
