@@ -94,7 +94,7 @@ async function run() {
         app.post('/password', async (req, res) => {
             //const object = JSON.parse(req.body)
             //const {password, email, name, userEmail} = object;
-            const pass = req.data;
+            const pass = req.body;
             console.log(req.body);
            // const hashedPassword = encrypt(password);
             //const data={hashedPassword,email,name, userEmail};
