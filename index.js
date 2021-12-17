@@ -9,8 +9,7 @@ const port = process.env.PORT || 5000;
 const ObjectId = require("mongodb").ObjectId;
 
 const { encrypt, decrypt } = require("./Encryption");
-const { json } = require("express/lib/response");
-const { application } = require("express");
+
 
 //middlewawire
 app.use(cors());
@@ -71,6 +70,13 @@ async function run() {
       res.json(result);
     });
 
+    app.get("/notes/:id", async (req, res) => {
+      const id = req.params.id;
+      console.log("delete", id);
+      const query = { _id: ObjectId(id) };
+      const result = await notesCollection.findOne(query);
+      res.json(result);
+    });
     app.delete("/notes/:id", async (req, res) => {
       const id = req.params.id;
       console.log("delete", id);
@@ -88,13 +94,6 @@ async function run() {
       res.json(result);
     });
 
-    // password api with encryption
-    app.post("/passowrd/:pass", async (req, res) => {
-        const password= req.params.pass;
-        const  hashedPassword = encrypt(password);
-        res.json(hashedPassword);
-    })
-    
     app.post("/password", async (req, res) => {
       const pass = req.body;
       console.log(req.body);     
