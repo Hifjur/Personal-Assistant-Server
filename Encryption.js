@@ -1,20 +1,19 @@
 const crypto = require("crypto");
 const secret = `${process.env.SECRET_KEY}`;
 
-const encrypt = (passwordData) => {
+const encrypt = (password) => {
   const iv = Buffer.from(crypto.randomBytes(16));
   const cipher = crypto.createCipheriv("aes-256-ctr", Buffer.from(secret), iv);
 
   const encryptedPassword = Buffer.concat([
-    cipher.update(passwordData.password),
+    cipher.update(password),
     cipher.final(),
   ]);
-  const result = JSON.stringify({
-    ...passwordData,
+  
+  return {
     iv: iv.toString("hex"),
     password: encryptedPassword.toString("hex"),
-  })
-  return result;
+  };
 };
 
 const decrypt = (encryption) => {

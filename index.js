@@ -10,6 +10,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 const { encrypt, decrypt } = require("./Encryption");
 const { json } = require("express/lib/response");
+const { application } = require("express");
 
 //middlewawire
 app.use(cors());
@@ -88,12 +89,16 @@ async function run() {
     });
 
     // password api with encryption
-    app.post("/password/:pass", async (req, res) => {
-      const pass = req.params.pass;
-      console.log(req.params);
-      const hashedPassword = encrypt(pass);
-     
-      const result = await passwordCollection.insertOne(hashedPassword);
+    app.post("/passowrd/:pass", async (req, res) => {
+        const password= req.params.pass;
+        const  hashedPassword = encrypt(password);
+        res.json(hashedPassword);
+    })
+    
+    app.post("/password", async (req, res) => {
+      const pass = req.body;
+      console.log(req.body);     
+      const result = await passwordCollection.insertOne(pass);
       console.log(result);
       res.json(result);
     });
