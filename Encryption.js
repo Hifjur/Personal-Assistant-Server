@@ -9,11 +9,11 @@ const encrypt = (password) => {
     cipher.update(password),
     cipher.final(),
   ]);
-
-  return {
+  const result = JSON.stringify({
     iv: iv.toString("hex"),
     password: encryptedPassword.toString("hex"),
-  };
+  })
+  return result;
 };
 
 const decrypt = (encryption) => {
