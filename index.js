@@ -27,7 +27,7 @@ async function run() {
     const database = client.db("PersonalAssistant");
     const todoCollection = database.collection("todo");
     const notesCollection = database.collection("notes");
-    const passwordCollection = database.collection("password");
+    const appointmentCollection = database.collection("appointment");
     const userCollection = database.collection("user");
     app.get("/todo", async (req, res) => {
       const email = req.query.email;
@@ -97,10 +97,19 @@ async function run() {
     app.post("/appointment", async (req, res) => {
       const Appointment = req.body;
       console.log(req.body);     
-      const result = await passwordCollection.insertOne(Appointment);
+      const result = await appointmentCollection.insertOne(Appointment);
       console.log(result);
       res.json(result);
     });
+
+    app.get("/appointment", async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email };
+      const cursor = notesCollection.find(query);
+      const notes = await cursor.toArray();
+      res.json(notes);
+    });
+
   } finally {
     //await client.close();
   }
