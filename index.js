@@ -105,7 +105,7 @@ async function run() {
     app.get("/appointment", async (req, res) => {
       const email = req.query.email;
       const query = { email: email };
-      const cursor = notesCollection.find(query);
+      const cursor = appointmentCollection.find(query);
       const notes = await cursor.toArray();
       res.json(notes);
     });
