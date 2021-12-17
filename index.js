@@ -30,7 +30,9 @@ async function run() {
         const passwordCollection = database.collection('password');
         const userCollection = database.collection('user');
         app.get('/todo', async (req, res) => {
-            const cursor = todoCollection.find();
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = todoCollection.find(query);
             const todo = await cursor.toArray();
             res.json(todo);
         })
