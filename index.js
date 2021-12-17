@@ -94,11 +94,12 @@ async function run() {
         app.post('/password', async (req, res) => {
             //const object = JSON.parse(req.body)
             //const {password, email, name, userEmail} = object;
+            const pass = req.data;
             console.log(req.body);
            // const hashedPassword = encrypt(password);
             //const data={hashedPassword,email,name, userEmail};
             //const finaldata = JSON.stringify(data);
-            const result = await passwordCollection.insertOne(req.data);
+            const result = await passwordCollection.insertOne(pass);
             console.log(result);
             res.json(result);
         });
