@@ -85,6 +85,16 @@ async function run() {
       res.json(result);
     });
 
+    app.put('/notes', async (req, res) => {
+      const noteId = req.body._id;      
+      const note = req.body.note;      
+      console.log(noteId);
+      const filter = {  _id: ObjectId(noteId)  };
+      const updateDoc = { $set: { note: `${note}` } };
+      const result = await orderCollection.updateOne(filter, updateDoc);
+      res.json(result);
+  })
+
     // add new user
     app.post("/users", async (req, res) => {
       const user = req.body;
